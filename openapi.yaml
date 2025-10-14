@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info: { title: EduBlog API, version: 1.0.0 }
+servers: [ { url: http://localhost:3000 } ]
+paths:
+  /posts:
+    get: { summary: Lista posts, responses: { '200': { description: OK } } }
+    post:
+      summary: Cria post
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/PostInput' } } }
+      responses: { '201': { description: Created } }
+  /posts/search:
+    get:
+      summary: Busca posts
+      parameters: [ { in: query, name: q, required: true, schema: { type: string } } ]
+      responses: { '200': { description: OK } }
+  /posts/{id}:
+    get:
+      summary: Lê post
+      parameters: [ { in: path, name: id, required: true, schema: { type: integer } } ]
+      responses: { '200': { description: OK }, '404': { description: Not Found } }
+    put:
+      summary: Edita post
+      parameters: [ { in: path, name: id, required: true, schema: { type: integer } } ]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/PostInput' } } }
+      responses: { '200': { description: OK }, '404': { description: Not Found } }
+    delete:
+      summary: Remove post
+      parameters: [ { in: path, name: id, required: true, schema: { type: integer } } ]
+      responses: { '204': { description: No Content }, '404': { description: Not Found } }
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        description: { type: string }
+        content: { type: string }
+        authorName: { type: string }
+        publishedAt: { type: string, format: date-time }
+    PostInput:
+      type: object
+      properties:
+        title: { type: string }
+        description: { type: string }
+        content: { type: string }
+        authorName: { type: string }
+        publishedAt: { type: string, format: date-time }

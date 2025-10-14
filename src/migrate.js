@@ -1,0 +1,1 @@
+import './db.js'; console.log('Migration check complete.');
