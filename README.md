@@ -20,3 +20,6 @@ POST /posts
 PUT /posts/{id}
 DELETE /posts/{id}
 GET /posts/search?q=...
+
+
+![CI](https://github.com/PaulaMessias/edublog-api/actions/workflows/ci.yml/badge.svg)
