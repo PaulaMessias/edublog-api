@@ -1,16 +1,40 @@
 name: CI
+
 on:
-  push: { branches: [ main, master ] }
-  pull_request: { branches: [ main, master ] }
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20 + cache de npm
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm test
-      - run: docker build -t edublog-api:ci .
+          node-version: '20'
+          cache: 'npm'
+
+      # Necessário para compilar o better-sqlite3 no Linux do runner
+      - name: Build tools para node-gyp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 make g++
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Testes com cobertura
+        run: npm test -- --coverage --runInBand
+
+      - name: Publicar relatório de cobertura
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage
