@@ -1,26 +1,8 @@
 {
-  "name": "edublog-api",
-  "version": "1.0.0",
-  "description": "EduBlog REST API (Express + SQLite) for Tech Challenge",
   "type": "module",
   "scripts": {
-    "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "migrate": "node src/migrate.js",
-    "seed": "node src/seed.js",
-    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
-    "postinstall": "node src/migrate.js && node src/seed.js"
-  },
-  "dependencies": {
-    "better-sqlite3": "^9.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^4.19.2",
-    "helmet": "^7.1.0",
-    "morgan": "^1.10.0"
-  },
-  "devDependencies": {
-    "jest": "^29.7.0",
-    "supertest": "^6.3.4"
+    "test": "jest --runInBand",
+    "coverage": "jest --coverage --runInBand"
   }
 }
