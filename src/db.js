@@ -24,3 +24,4 @@ CREATE INDEX IF NOT EXISTS idx_posts_title ON posts(title);
 `);
 
 export default db;
+export { db };

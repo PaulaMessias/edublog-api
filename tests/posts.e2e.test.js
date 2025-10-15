@@ -2,6 +2,20 @@ import request from 'supertest';
 import app from '../src/app.js';
 import { db } from '../src/db.js';
 
+beforeAll(() => {
+  // cria a tabela quando o DB é ':memory:' (CI)
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS posts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      description TEXT,
+      content TEXT,
+      authorName TEXT,
+      publishedAt TEXT DEFAULT (datetime('now'))
+    )
+  `);
+});
+
 beforeEach(() => {
   db.prepare('DELETE FROM posts').run();
 });
