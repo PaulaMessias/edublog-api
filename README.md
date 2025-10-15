@@ -160,9 +160,9 @@ Veja `.github/workflows/ci.yml`. A pipeline instala dependências e roda testes 
 - Autenticação (JWT).
 - Conectores REST no OutSystems.
 
-<div>
+<div style="text-align:center">
     <a href="https://www.loom.com/share/dae52660e7294b5aa455711689e378a1">
-      <p>Apresentação do Aplicativo Volvo 🚀 - Watch Video</p>
+      <p>Apresentação do Aplicativo Edublog 🚀 - Watch Video</p>
     </a>
     <a href="https://www.loom.com/share/dae52660e7294b5aa455711689e378a1">
       <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/dae52660e7294b5aa455711689e378a1-bbf546764c12dca9-full-play.gif">
