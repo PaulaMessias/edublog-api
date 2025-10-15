@@ -1,30 +1,24 @@
 import request from 'supertest';
+import app from '../src/app.js';
+import { db } from '../src/db.js';
 
-// força DB em memória para não tocar disco nos testes
-process.env.DB_FILE = ':memory:';
-
-const { default: app } = await import('../src/app.js');
-const { default: migrate } = await import('../src/migrate.js');
-const { default: seed } from '../src/seed.js';
-
-beforeAll(async () => {
-  await migrate();
-  await seed();
+beforeEach(() => {
+  db.prepare('DELETE FROM posts').run();
 });
 
-describe('Posts E2E', () => {
-  it('should create and list posts', async () => {
-    const create = await request(app)
-      .post('/posts')
-      .send({ title: 'Teste', description: 'Demo', content: 'Oi', authorName: 'Prof' })
-      .set('Content-Type', 'application/json');
+describe('Posts', () => {
+  it('POST /posts creates', async () => {
+    const payload = { title:'Primeiro post', description:'demo', content:'oi', authorName:'Prof' };
+    const res = await request(app).post('/posts').send(payload);
+    expect(res.status).toBe(201);
+    expect(res.body).toHaveProperty('id');
+  });
 
-    expect(create.status).toBe(201);
-    expect(create.body.id).toBeDefined();
-
-    const list = await request(app).get('/posts');
-    expect(list.status).toBe(200);
-    expect(Array.isArray(list.body)).toBe(true);
-    expect(list.body.length).toBeGreaterThan(0);
+  it('GET /posts lists', async () => {
+    await request(app).post('/posts').send({ title:'A', description:'d', content:'c', authorName:'Prof' });
+    const res = await request(app).get('/posts');
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
   });
 });
