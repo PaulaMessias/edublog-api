@@ -1,5 +1,3 @@
-mkdir -p .github/workflows
-cat > .github/workflows/ci.yml <<'EOF'
 name: CI
 on: [push]
 
@@ -8,18 +6,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
+
       - run: sudo apt-get update && sudo apt-get install -y python3 make g++
+
       - run: npm ci
-      - run: npm run test:ci
+
+      - name: Testes com cobertura
+        run: npm run test:ci
         env:
           DB_FILE: ":memory:"
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: coverage
           path: coverage
-EOF

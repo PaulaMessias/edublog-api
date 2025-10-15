@@ -1,3 +1,7 @@
-/data/*
-!/data/.gitkeep
+node_modules/
+coverage/
+data/*.db
 .env
+.nyc_output/
+*.log
+.DS_Store
