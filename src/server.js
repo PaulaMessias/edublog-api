@@ -5,3 +5,4 @@ const port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', () => {
   console.log(`EduBlog API on http://0.0.0.0:${port}`);
 });
+export default app; // ou: export { app }
