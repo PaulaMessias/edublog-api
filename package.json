@@ -1,6 +1,23 @@
-"scripts": {
-  "start": "node src/server.js",
-  "migrate": "node src/migrate.js",
-  "seed": "node src/seed.js",
-  "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --coverage"
+{
+  "name": "edublog-api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "migrate": "node src/migrate.js",
+    "seed": "node src/seed.js",
+    "test": "jest --runInBand",
+    "test:ci": "jest --runInBand --coverage"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0",
+    "better-sqlite3": "^9.4.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.1.3"
+  }
 }
